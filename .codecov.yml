@@ -8,9 +8,12 @@ coverage:
   round: down
   status:
     project:
-      default:
-        threshold: 0.2
-        if_not_found: success
+      default: off
+      cli:
+        flags: cli
+      core:
+        target: 50%
+        flags: core
     patch:
       default:
         enabled: no
@@ -19,3 +22,11 @@ coverage:
       default:
         enabled: no
         if_not_found: success
+
+flags:
+  cli:
+    paths:
+      - packages/cli/
+  core:
+    paths:
+      - packages/core/

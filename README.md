@@ -1,18 +1,20 @@
-[![npm @latest](https://img.shields.io/npm/v/gitlab.svg)](https://www.npmjs.com/package/gitlab)
-[![npm downloads](https://img.shields.io/npm/dt/gitlab.svg)](https://www.npmjs.com/package/gitlab)
-[![dependencies Status](https://david-dm.org/jdalrymple/node-gitlab/status.svg)](https://david-dm.org/jdalrymple/node-gitlab)
-[![devDependencies Status](https://david-dm.org/jdalrymple/node-gitlab/dev-status.svg)](https://david-dm.org/jdalrymple/node-gitlab?type=dev)
-[![Greenkeeper badge](https://badges.greenkeeper.io/jdalrymple/node-gitlab.svg)](https://greenkeeper.io/)
-[![Code Climate](https://codeclimate.com/github/jdalrymple/node-gitlab/badges/gpa.svg)](https://codeclimate.com/github/jdalrymple/node-gitlab)
-[![Build Status](https://img.shields.io/travis/jdalrymple/node-gitlab/master.svg)](https://travis-ci.org/jdalrymple/node-gitlab)
-[![Coverage](https://img.shields.io/codecov/c/github/jdalrymple/node-gitlab/master.svg)](https://codecov.io/gh/jdalrymple/node-gitlab)
+[![npm @latest](https://img.shields.io/npm/v/@gitbeaker/core.svg)](https://www.npmjs.com/package/@gitbeaker/core)
+[![npm downloads](https://img.shields.io/npm/dt/@gitbeaker/core.svg)](https://www.npmjs.com/package/@gitbeaker/core)
+[![dependencies Status](https://david-dm.org/jdalrymple/gitbeaker/status.svg)](https://david-dm.org/jdalrymple/gitbeaker)
+[![devDependencies Status](https://david-dm.org/jdalrymple/gitbeaker/dev-status.svg)](https://david-dm.org/jdalrymple/gitbeaker?type=dev)
+[![Greenkeeper badge](https://badges.greenkeeper.io/jdalrymple/gitbeaker.svg)](https://greenkeeper.io/)
+[![Code Climate](https://codeclimate.com/github/jdalrymple/gitbeaker/badges/gpa.svg)](https://codeclimate.com/github/jdalrymple/gitbeaker)
+[![Build Status](https://img.shields.io/travis/jdalrymple/gitbeaker/master.svg)](https://travis-ci.org/jdalrymple/gitbeaker)
+[![Coverage](https://img.shields.io/codecov/c/github/jdalrymple/gitbeaker/master.svg)](https://codecov.io/gh/jdalrymple/gitbeaker)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![Code Style: Prettier](https://img.shields.io/badge/code%20style-prettier-ff69b4.svg)](https://img.shields.io/badge/code%20style-prettier-ff69b4.svg)
-[![Install Size](https://packagephobia.now.sh/badge?p=gitlab)](https://packagephobia.now.sh/result?p=gitlab)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/jdalrymple/node-gitlab/blob/master/LICENSE.md)
+[![Install Size: Core](https://packagephobia.now.sh/badge?p=@gitbeaker/core)](https://packagephobia.now.sh/result?p=@gitbeaker/core)
+[![Install Size: Browser](https://packagephobia.now.sh/badge?p=@gitbeaker/browser)](https://packagephobia.now.sh/result?p=@gitbeaker/browser)
+[![Install Size: CLI](https://packagephobia.now.sh/badge?p=@gitbeaker/cli)](https://packagephobia.now.sh/result?p=@gitbeaker/cli)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/jdalrymple/gitbeaker/blob/master/LICENSE.md)
 
-# node-gitlab
+![](.github/ASSETS/header.svg)
 
 🤖 [GitLab](https://gitlab.com/gitlab-org/gitlab/) API NodeJS library with full support of all the [Gitlab API](https://gitlab.com/gitlab-org/gitlab/tree/master/doc/api) services.
 
@@ -40,7 +42,10 @@
 
 ```bash
 # Install from npm
-npm install gitlab
+npm install @gitbeaker/core    # Nodejs
+npm install @gitbeaker/browser # Browser
+npm install @gitbeaker/cli     # CLI
+
 ```
 
 ## Getting Started
@@ -71,7 +76,7 @@ Available instantiating options:
 | `token`              | No\*     | N/A                                                   | Personal Token. Required (one of the three tokens are required)                                                    |
 | `oauthToken`         | No\*     | N/A                                                   | OAuth Token. Required (one of the three tokens are required)                                                       |
 | `jobToken`           | No\*     | N/A                                                   | CI Job Token. Required (one of the three tokens are required)                                                      |
-| `rejectUnauthorized` | Yes      | `true`                                               | Http Certificate setting, Only applies to HTTPS hosts urls                                                                                           |
+| `rejectUnauthorized` | Yes      | `true`                                                | Http Certificate setting, Only applies to HTTPS hosts urls                                                         |
 | `sudo`               | Yes      | `false`                                               | [Sudo](https://docs.gitlab.com/ee/api/#sudo) query parameter                                                       |
 | `version`            | Yes      | `4`                                                   | API Version ID                                                                                                     |
 | `camelize`           | Yes      | `false`                                               | Camelizes all response body keys                                                                                   |
@@ -90,21 +95,22 @@ gitlab [service name] [method name] --arg1 --arg2 --arg3
 
 Where `service name` is any of the supported API names, `method name` is any of the supported commands on that API service (See source for exceptions, but generally all, show, remove, update) and `--arg1...--arg3` are any of the arguments you would normally supply to the function. The names of the args should match the names in the method headers **EXCEPT** all the optional arguments whose names should match what the GitLab API docs request.
 
-There is one small exception with the instantiating arguments, however, which must be supplied using a `gl` prefix. ie.
+There is one small exception with the instantiating arguments, however, which must be supplied using a `gb` or `gl` prefix. ie.
 
 ```bash
 # To get all the projects
-gitlab projects all --gl-token="personaltoken"
+gitlab projects all --gb-token="personaltoken"
 
 # To get a project with id = 2
 gitlab projects show --gl-token="personaltoken" --projectId=2
 ```
 
-To reduce the annoyance of having to pass those configuration properties each time, it is also possible to pass the token and host information through environment variables in the form of `GITLAB_[option name]` ie:
+To reduce the annoyance of having to pass those configuration properties each time, it is also possible to pass the token and host information through environment variables in the form of `GITLAB_[option name]` or `GITBEAKER_[option name]` ie:
 
 ```bash
 GITLAB_HOST=http://example.com
 GITLAB_TOKEN=personaltoken
+GITBEAKER_CAMELIZE=true
 ```
 
 This could be set globally or using a [.env](https://github.com/motdotla/dotenv#readme) file in the project folder.
@@ -114,7 +120,7 @@ This could be set globally or using a [.env](https://github.com/motdotla/dotenv#
 The library is exported as `gitlab` and can be used by simply adding this script to your html file:
 
 ```html
-<script src="node_modules/gitlab/dist/index.browser.js" />
+<script src="node_modules/@gitbeaker/browser/index.js" />
 <script>
   const { Gitlab } = gitlab;
 
@@ -503,13 +509,13 @@ fs.writeFileSync("test.zip", bufferedData);
 To get this running locally rather than from your `node_modules` folder:
 
 ```bash
-$ git clone https://github.com/jdalrymple/node-gitlab.git
-$ cd node-gitlab
+$ git clone https://github.com/jdalrymple/gitbeaker.git
+$ cd gitbeaker
 $ npm install
 $ npm run-script build
 ```
 
-And then inside whatever project you are using `node-gitlab` in you change your references to use that repo. In your package.json of that upstream project change:
+And then inside whatever project you are using `gitbeaker` in you change your references to use that repo. In your package.json of that upstream project change:
 
 ```json
 "dependencies": {
@@ -562,7 +568,7 @@ PERSONAL_ACCESS_TOKEN='abcdefg' GITLAB_URL='http://localhost:8080' npm run test
 
 ## Contributors
 
-This started as a fork from [node-gitlab](https://github.com/node-gitlab/node-gitlab) but I ended up rewriting much of the code. Here are the original work's [contributors](https://github.com/node-gitlab/node-gitlab#contributors).
+This started as a fork from [node-gitlab-legacy](https://github.com/node-gitlab/node-gitlab-legacy) but I ended up rewriting much of the code. Here are the original work's [contributors](https://github.com/node-gitlab/node-gitlab-legacy#contributors).
 
 - [Dylan DesRosier](https://github.com/ddesrosier)
 - [Mike Wyatt](https://github.com/mikew)
@@ -618,8 +624,8 @@ This started as a fork from [node-gitlab](https://github.com/node-gitlab/node-gi
 
 ## License
 
-[MIT](https://github.com/jdalrymple/node-gitlab/blob/master/LICENSE.md)
+[MIT](https://github.com/jdalrymple/gitbeaker/blob/master/LICENSE.md)
 
 ## Changelog
 
-[Here](https://github.com/jdalrymple/node-gitlab/blob/master/CHANGELOG.md)
+[Here](https://github.com/jdalrymple/gitbeaker/blob/master/CHANGELOG.md)
