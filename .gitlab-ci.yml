@@ -90,9 +90,9 @@ test:core-cjs:integration:
 #   script: npm run test:integration -- --scope=core --moduleNameMapper="{dist:dist/index.umd.js}" && codecov
 
 # Release
-# release:
-#   only:
-#     refs:
-#       - master
-#   stage: release
-#   script: yarn release
+release:
+  only:
+    refs:
+      - master
+  stage: release
+  script: yarn release
