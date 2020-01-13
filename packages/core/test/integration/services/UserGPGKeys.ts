@@ -44,6 +44,6 @@ describe('UserGPGKeys.remove', () => {
 
     await service.remove(key.id);
 
-    await expect(service.show(key.id)).toThrow();
+    await expect(service.show(key.id)).rejects.toThrow();
   });
 });

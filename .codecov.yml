@@ -10,6 +10,7 @@ coverage:
     project:
       default: off
       cli:
+        target: 50%
         flags: cli
       core:
         target: 50%

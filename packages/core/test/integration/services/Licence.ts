@@ -40,6 +40,6 @@ describe('Licence.remove', () => {
 
     await service.remove(licence.id);
 
-    await expect(service.show(licence.id)).toThrow();
+    await expect(service.show(licence.id)).rejects.toThrow();
   });
 });
