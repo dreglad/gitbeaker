@@ -14,8 +14,11 @@ beforeAll(async () => {
 
   service = new NotificationSettings(config);
 
-  group = await groupService.create({ name: 'Notification Settings Integration' });
-  project = await projectService.create({ name: 'Notification Settings Integration' });
+  group = await groupService.create(
+    'Notification Settings Integration',
+    'notification-settings-integration-test',
+  );
+  project = await projectService.create({ name: 'Notification Settings Integration Test' });
 });
 
 describe('NotificationSettings.all', () => {

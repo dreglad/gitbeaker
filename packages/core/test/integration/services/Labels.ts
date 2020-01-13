@@ -9,81 +9,75 @@ let service: Labels;
 
 beforeAll(async () => {
   // Crease project service
-  // const projectService = new Projects(config);
+  const projectService = new Projects(config);
 
   // Create issue service
   service = new Labels(config);
 
   // Create a template project
-  // project = await projectService.create({ name: 'Labels Integration test' });
+  project = await projectService.create({ name: 'Labels Integration test' });
 });
 
 describe('Labels.create', () => {
   it('should create a valid label on a project', async () => {
-    const projectService = new Projects(config);
+    const label = await service.create(project.id, 'Test Label1', '#FFAABB');
 
-    project = await projectService.create({ name: 'Labels Integration test' });
-
-    expect(project).toBeDefined();
-    expect(service).toBeDefined();
-    // const label = await service.create(project.id, 'Test Label1', '#FFAABB');
-
-    // expect(label).toBeInstanceOf(Object);
-    // expect(label.name).toBe('Test Label1');
+    expect(label).toBeInstanceOf(Object);
+    expect(label.name).toBe('Test Label1');
   });
 });
 
-// describe('Labels.remove', () => {
-//   it('should remove/delete a valid label on a project', async () => {
-//     const label = await service.create(project.id, 'Test Label3', '#FFAABB');
-//     const value = await service.remove(project.id, label.name);
+describe('Labels.remove', () => {
+  it('should remove/delete a valid label on a project', async () => {
+    const label = await service.create(project.id, 'Test Label3', '#FFAABB');
+    const value = await service.remove(project.id, label.name);
 
-//     expect(value).toEqual('');
-//   });
-// });
+    expect(value).toEqual('');
+  });
+});
 
-// describe('Labels.all', () => {
-//   beforeAll(async () => {
-//     const labels: object[] = [];
+describe('Labels.all', () => {
+  beforeAll(async () => {
+    const labels: object[] = [];
 
-//     for (let i = 0; i < 50; i += 1) {
-//       labels.push(service.create(project.id, `All Labels ${i}`, '#FFAABB'));
-//     }
+    for (let i = 0; i < 50; i += 1) {
+      labels.push(service.create(project.id, `All Labels ${i}`, '#FFAABB'));
+    }
 
-//     return Promise.all(labels);
-//   });
+    return Promise.all(labels);
+  });
 
-//   it('should return a list of labels on a project', async () => {
-//     const labels = await service.all(project.id, { perPage: 3 });
-//     const filtered = labels.filter(l => l.name.includes('All Labels'));
+  it('should return a list of labels on a project', async () => {
+    const labels = await service.all(project.id, { perPage: 3 });
+    const filtered = labels.filter(l => l.name.includes('All Labels'));
 
-//     expect(labels).toBeInstanceOf(Array);
-//     expect(filtered).toHaveLength(50);
-//   });
+    expect(labels).toBeInstanceOf(Array);
+    expect(filtered).toHaveLength(50);
+  });
 
-//   it('should return a list of labels on a project restricted to page 5', async () => {
-//     const labels = await service.all(project.id, { perPage: 5, page: 5 });
+  it('should return a list of labels on a project restricted to page 5', async () => {
+    const labels = await service.all(project.id, { perPage: 5, page: 5 });
 
-//     expect(labels).toBeInstanceOf(Array);
-//     expect(labels).toHaveLength(5);
-//   });
+    expect(labels).toBeInstanceOf(Array);
+    expect(labels).toHaveLength(5);
+  });
 
-//   it('should return a list of labels on a project restricted to page 5 and show the pagination object', async () => {
-//     const { data, pagination } = await service.all(project.id, {
-//       perPage: 5,
-//       page: 5,
-//       showPagination: true,
-//     });
+  it('should return a list of labels on a project restricted to page 5 and show the pagination object', async () => {
+    const { data, pagination } = await service.all(project.id, {
+      perPage: 5,
+      page: 5,
+      showPagination: true,
+    });
 
-//     expect(data).toBeInstanceOf(Array);
-//     expect(data).toHaveLength(5);
-//     expect(pagination).toMatchObject({
-//       total: 51, // TODO: change this to not depend on previous data
-//       previous: 4,
-//       current: 5,
-//       next: 6,
-//       perPage: 5,
-//       totalPages: 11,
-//     });
-//   });
-// });
+    expect(data).toBeInstanceOf(Array);
+    expect(data).toHaveLength(5);
+    expect(pagination).toMatchObject({
+      total: 51, // TODO: change this to not depend on previous data
+      previous: 4,
+      current: 5,
+      next: 6,
+      perPage: 5,
+      totalPages: 11,
+    });
+  });
+});

@@ -14,7 +14,10 @@ beforeAll(async () => {
 
   service = new IssuesStatistics(config);
 
-  group = await groupService.create({ name: 'IssuesStatistics Integration' });
+  group = await groupService.create(
+    'IssuesStatistics Integration Test',
+    'issues-statistics-integration-test',
+  );
   project = await projectService.create({ name: 'IssuesStatistics Integration' });
 });
 
