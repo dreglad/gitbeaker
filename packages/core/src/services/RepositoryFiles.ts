@@ -1,6 +1,8 @@
 import { BaseService, RequestHelper, BaseRequestOptions, Sudo } from '../infrastructure';
 
-export interface RepositoryFileSchema {
+export type RepositoryFileSchema = RepositoryFileSchemaDefault | RepositoryFileSchemaCamelized;
+
+export interface RepositoryFileSchemaDefault {
   file_name: string;
   file_path: string;
   size: number;
@@ -11,6 +13,19 @@ export interface RepositoryFileSchema {
   blob_id: string;
   commit_id: string;
   last_commit_id: string;
+}
+
+export interface RepositoryFileSchemaCamelized {
+  fileName: string;
+  filePath: string;
+  size: number;
+  encoding: string;
+  content: string;
+  contentSha256: string;
+  ref: string;
+  blobId: string;
+  commitId: string;
+  lastCommitId: string;
 }
 
 export class RepositoryFiles extends BaseService {
