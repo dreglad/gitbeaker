@@ -42,6 +42,9 @@ export async function handler(endpoint, options) {
     if (e.response) {
       const output = e.response.body;
 
+      console.debug(e);
+      console.debug(e.request);
+
       e.description = output.error || output.message;
     }
 

@@ -1,20 +1,48 @@
-[![npm @latest](https://img.shields.io/npm/v/@gitbeaker/core.svg)](https://www.npmjs.com/package/@gitbeaker/core)
-[![npm downloads](https://img.shields.io/npm/dt/@gitbeaker/core.svg)](https://www.npmjs.com/package/@gitbeaker/core)
-[![dependencies Status](https://david-dm.org/jdalrymple/gitbeaker/status.svg)](https://david-dm.org/jdalrymple/gitbeaker)
-[![devDependencies Status](https://david-dm.org/jdalrymple/gitbeaker/dev-status.svg)](https://david-dm.org/jdalrymple/gitbeaker?type=dev)
-[![Greenkeeper badge](https://badges.greenkeeper.io/jdalrymple/gitbeaker.svg)](https://greenkeeper.io/)
-[![Code Climate](https://codeclimate.com/github/jdalrymple/gitbeaker/badges/gpa.svg)](https://codeclimate.com/github/jdalrymple/gitbeaker)
-[![Build Status](https://img.shields.io/travis/jdalrymple/gitbeaker/master.svg)](https://travis-ci.org/jdalrymple/gitbeaker)
-[![Coverage](https://img.shields.io/codecov/c/github/jdalrymple/gitbeaker/master.svg)](https://codecov.io/gh/jdalrymple/gitbeaker)
-[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
-[![Code Style: Prettier](https://img.shields.io/badge/code%20style-prettier-ff69b4.svg)](https://img.shields.io/badge/code%20style-prettier-ff69b4.svg)
-[![Install Size: Core](https://packagephobia.now.sh/badge?p=@gitbeaker/core)](https://packagephobia.now.sh/result?p=@gitbeaker/core)
-[![Install Size: Browser](https://packagephobia.now.sh/badge?p=@gitbeaker/browser)](https://packagephobia.now.sh/result?p=@gitbeaker/browser)
-[![Install Size: CLI](https://packagephobia.now.sh/badge?p=@gitbeaker/cli)](https://packagephobia.now.sh/result?p=@gitbeaker/cli)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/jdalrymple/gitbeaker/blob/master/LICENSE.md)
-
-![](.github/ASSETS/header.svg)
+<div align="center">
+  <br>
+  <img alt="gitbeaker" src=".github/ASSETS/header.svg">
+</div>
+<br>
+<p align="center">
+  <a href="https://www.npmjs.com/package/@gitbeaker/core">
+    <img src="https://img.shields.io/npm/v/@gitbeaker/core.svg" alt="latest">
+  </a>
+  <a href="https://www.npmjs.com/package/@gitbeaker/core">
+    <img src="https://img.shields.io/npm/dt/@gitbeaker/core.svg" alt="downloads">
+  </a>
+  <a href="https://gitlab.com/jdalrymple/gitbeaker/pipelines">
+    <img src="https://img.shields.io/gitlab/pipeline/jdalrymple/gitbeaker/master" alt="Gitlab Pipeline Status">
+  </a>
+  <a href="https://codeclimate.com/github/jdalrymple/gitbeaker">
+    <img src="https://codeclimate.com/github/jdalrymple/gitbeaker/badges/gpa.svg" alt="Code Climate maintainability">
+  </a>
+  <a href="https://codecov.io/gh/jdalrymple/gitbeaker">
+    <img src="https://img.shields.io/codecov/c/github/jdalrymple/gitbeaker/master.svg" alt="CodeCov test coverage">
+  </a>
+  <a href="https://david-dm.org/jdalrymple/gitbeaker">
+    <img src="https://david-dm.org/jdalrymple/gitbeaker/status.svg" alt="Dependency Status" />
+  </a>
+  <a href="https://david-dm.org/jdalrymple/gitbeaker?type=dev">
+    <img src="https://david-dm.org/jdalrymple/gitbeaker/dev-status.svg.svg" alt="Dev Dependency Status" />
+  </a>
+  <img src="https://flat.badgen.net/dependabot/jdalrymple/gitbeaker?icon=dependabot" alt="Dependabot Badge" />
+  <a href="https://github.com/semantic-release/semantic-release">
+    <img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg" alt="Semantic Release">
+  </a>
+  <a href="http://commitizen.github.io/cz-cli/">
+    <img src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg" alt="Commitizen">
+  </a>
+  <img src="https://img.shields.io/badge/code%20style-prettier-ff69b4.svg" alt="Prettier">
+  <a href="https://packagephobia.now.sh/result?p=@gitbeaker/core">
+    <img src="https://packagephobia.now.sh/badge?p=@gitbeaker/core" alt="Install Size: Core">
+  </a>
+  <a href="https://packagephobia.now.sh/result?p=@gitbeaker/cli">
+    <img src="https://packagephobia.now.sh/badge?p=@gitbeaker/cli" alt="Install Size: CLI">
+  </a>
+  <a href="LICENSE.md">
+    <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="Licence: MIT">
+  </a>
+</p>
 
 🤖 [GitLab](https://gitlab.com/gitlab-org/gitlab/) API NodeJS library with full support of all the [Gitlab API](https://gitlab.com/gitlab-org/gitlab/tree/master/doc/api) services.
 
@@ -42,9 +70,8 @@
 
 ```bash
 # Install from npm
-npm install @gitbeaker/core    # Nodejs
-npm install @gitbeaker/browser # Browser
-npm install @gitbeaker/cli     # CLI
+npm install @gitbeaker/core # NodeJS default, index.es.js for esm, and index.umd.js for Browser
+npm install @gitbeaker/cli  # CLI
 
 ```
 
@@ -70,20 +97,20 @@ const api = new Gitlab({
 
 Available instantiating options:
 
-| Name                 | Optional | Default                                               | Description                                                                                                        |
-| -------------------- | -------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| `host`               | Yes      | `https://gitlab.com`                                  | Gitlab Instance Host URL                                                                                           |
-| `token`              | No\*     | N/A                                                   | Personal Token. Required (one of the three tokens are required)                                                    |
-| `oauthToken`         | No\*     | N/A                                                   | OAuth Token. Required (one of the three tokens are required)                                                       |
-| `jobToken`           | No\*     | N/A                                                   | CI Job Token. Required (one of the three tokens are required)                                                      |
-| `rejectUnauthorized` | Yes      | `true`                                                | Http Certificate setting, Only applies to HTTPS hosts urls                                                         |
-| `sudo`               | Yes      | `false`                                               | [Sudo](https://docs.gitlab.com/ee/api/#sudo) query parameter                                                       |
-| `version`            | Yes      | `4`                                                   | API Version ID                                                                                                     |
-| `camelize`           | Yes      | `false`                                               | Camelizes all response body keys                                                                                   |
-| `requester`          | Yes      | [KyRequester.ts](./src/infrastructure/KyRequester.ts) | Request Library Wrapper. Currently wraps Ky.                                                                       |
-| `requestTimeout`     | Yes      | `300000`                                              | Request Library Timeout in ms                                                                                      |
-| `profileToken`       | Yes      | N/A                                                   | [Requests Profiles Token](https://docs.gitlab.com/ee/administration/monitoring/performance/request_profiling.html) |
-| `profileMode`        | Yes      | `execution`                                           | [Requests Profiles Token](https://docs.gitlab.com/ee/administration/monitoring/performance/request_profiling.html) |
+| Name                 | Optional | Default                                                 | Description                                                                                                        |
+| -------------------- | -------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `host`               | Yes      | `https://gitlab.com`                                    | Gitlab Instance Host URL                                                                                           |
+| `token`              | No\*     | N/A                                                     | Personal Token. Required (one of the three tokens are required)                                                    |
+| `oauthToken`         | No\*     | N/A                                                     | OAuth Token. Required (one of the three tokens are required)                                                       |
+| `jobToken`           | No\*     | N/A                                                     | CI Job Token. Required (one of the three tokens are required)                                                      |
+| `rejectUnauthorized` | Yes      | `true`                                                  | Http Certificate setting, Only applies to HTTPS hosts urls                                                         |
+| `sudo`               | Yes      | `false`                                                 | [Sudo](https://docs.gitlab.com/ee/api/#sudo) query parameter                                                       |
+| `version`            | Yes      | `4`                                                     | API Version ID                                                                                                     |
+| `camelize`           | Yes      | `false`                                                 | Camelizes all response body keys                                                                                   |
+| `requester`          | Yes      | [GotRequester.ts](./src/infrastructure/GotRequester.ts) | Request Library Wrapper. Currently wraps Ky.                                                                       |
+| `requestTimeout`     | Yes      | `300000`                                                | Request Library Timeout in ms                                                                                      |
+| `profileToken`       | Yes      | N/A                                                     | [Requests Profiles Token](https://docs.gitlab.com/ee/administration/monitoring/performance/request_profiling.html) |
+| `profileMode`        | Yes      | `execution`                                             | [Requests Profiles Token](https://docs.gitlab.com/ee/administration/monitoring/performance/request_profiling.html) |
 
 ### CLI Support
 

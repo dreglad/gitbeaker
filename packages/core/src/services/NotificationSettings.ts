@@ -13,12 +13,10 @@ type NotificationSettingLevel =
   | 'mention'
   | 'custom';
 
+type ProjectOrGroup = { projectId: string | number } | { groupId: string | number } | {};
+
 export class NotificationSettings extends BaseService {
-  all({
-    projectId,
-    groupId,
-    ...options
-  }: ({ projectId: string | number } | { groupId: string | number }) & PaginatedRequestOptions) {
+  all({ projectId, groupId, ...options }: ProjectOrGroup & PaginatedRequestOptions = {}) {
     let url = '';
 
     if (projectId) {
@@ -34,11 +32,7 @@ export class NotificationSettings extends BaseService {
     projectId,
     groupId,
     ...options
-  }: { level?: NotificationSettingLevel } & (
-    | { projectId: string | number }
-    | { groupId: string | number }
-  ) &
-    BaseRequestOptions) {
+  }: { level?: NotificationSettingLevel } & ProjectOrGroup & BaseRequestOptions = {}) {
     let url = '';
 
     if (projectId) {

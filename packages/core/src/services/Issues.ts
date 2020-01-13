@@ -6,6 +6,8 @@ import {
   Sudo,
 } from '../infrastructure';
 
+type ProjectOrGroup = { projectId: string | number } | { groupId: string | number } | {};
+
 export class Issues extends BaseService {
   addSpentTime(projectId: string | number, issueId: number, duration: string, options?: Sudo) {
     const [pId, iId] = [projectId, issueId].map(encodeURIComponent);
@@ -25,12 +27,7 @@ export class Issues extends BaseService {
     });
   }
 
-  all({
-    projectId,
-    groupId,
-    ...options
-  }: ({ projectId?: string | number } | { groupId?: string | number } | {}) &
-    PaginatedRequestOptions = {}) {
+  all({ projectId, groupId, ...options }: ProjectOrGroup & PaginatedRequestOptions = {}) {
     let url;
 
     if (projectId) {
