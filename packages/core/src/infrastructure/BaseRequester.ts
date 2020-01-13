@@ -1,7 +1,7 @@
 import FormData from 'form-data';
 import { decamelizeKeys } from 'xcase';
-import { stringify } from 'query-string';
 import { Agent } from 'https';
+import { formatQuery } from './Utils';
 
 export interface RequesterType {
   get: Function;
@@ -46,7 +46,7 @@ export function defaultRequest(
     headers,
     timeout: service.requestTimeout,
     method,
-    searchParams: stringify(decamelizeKeys(query || {}) as object, { arrayFormat: 'bracket' }),
+    searchParams: formatQuery(query),
     prefixUrl: service.url,
     body: bod,
   };

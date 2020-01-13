@@ -45,7 +45,9 @@ export class BaseService {
     requestTimeout = 300000,
   }: BaseServiceOptions = {}) {
     this.url = [host, 'api', `v${version}`, url].join('/');
-    this.headers = {};
+    this.headers = {
+      'user-agent': 'gitbeaker',
+    };
     this.rejectUnauthorized = rejectUnauthorized;
     this.camelize = camelize;
     this.requester = requester;

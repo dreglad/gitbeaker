@@ -3,6 +3,7 @@ import {
   BaseService,
   PaginatedRequestOptions,
   RequestHelper,
+  formatQuery,
 } from '../infrastructure';
 
 type NotificationSettingLevel =
@@ -16,7 +17,8 @@ type NotificationSettingLevel =
 type ProjectOrGroup = { projectId: string | number } | { groupId: string | number } | {};
 
 export class NotificationSettings extends BaseService {
-  all({ projectId, groupId, ...options }: ProjectOrGroup & PaginatedRequestOptions = {}) {
+  all({ projectId, groupId, sudo, ...query }: ProjectOrGroup & PaginatedRequestOptions = {}) {
+    const q = formatQuery(query);
     let url = '';
 
     if (projectId) {
@@ -25,14 +27,16 @@ export class NotificationSettings extends BaseService {
       url += `groups/${encodeURIComponent(groupId)}/`;
     }
 
-    return RequestHelper.get(this, `${url}notification_settings`, options);
+    return RequestHelper.get(this, `${url}notification_settings?${q}`, { sudo });
   }
 
   edit({
     projectId,
     groupId,
-    ...options
+    sudo,
+    ...query
   }: { level?: NotificationSettingLevel } & ProjectOrGroup & BaseRequestOptions = {}) {
+    const q = formatQuery(query);
     let url = '';
 
     if (projectId) {
@@ -41,6 +45,6 @@ export class NotificationSettings extends BaseService {
       url += `groups/${encodeURIComponent(groupId)}/`;
     }
 
-    return RequestHelper.put(this, `${url}notification_settings`, options);
+    return RequestHelper.put(this, `${url}notification_settings?${q}`, { sudo });
   }
 }

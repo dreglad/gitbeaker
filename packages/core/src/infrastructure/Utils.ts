@@ -1,4 +1,6 @@
 /* eslint @typescript-eslint/no-explicit-any: 0 */
+import { decamelizeKeys } from 'xcase';
+import { stringify } from 'query-string';
 
 interface Constructor {
   new (...args: any): any;
@@ -18,4 +20,8 @@ export function bundler<T extends { [name: string]: Constructor }, P extends key
       this[name] = new Ser(options);
     });
   } as any) as Bundle<T, P>;
+}
+
+export function formatQuery(options) {
+  return stringify(decamelizeKeys(options || {}) as object, { arrayFormat: 'bracket' });
 }

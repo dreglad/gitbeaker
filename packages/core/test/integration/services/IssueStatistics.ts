@@ -1,4 +1,4 @@
-import { IssueStatistics, Projects, Groups } from '../../../dist';
+import { IssuesStatistics, Projects, Groups } from '../../../dist';
 
 const config = {
   host: process.env.GITLAB_URL,
@@ -12,13 +12,13 @@ beforeAll(async () => {
   const projectService = new Projects(config);
   const groupService = new Groups(config);
 
-  service = new IssueStatistics(config);
+  service = new IssuesStatistics(config);
 
-  group = await groupService.create({ name: 'IssueStatistics Integration' });
-  project = await projectService.create({ name: 'IssueStatistics Integration' });
+  group = await groupService.create({ name: 'IssuesStatistics Integration' });
+  project = await projectService.create({ name: 'IssuesStatistics Integration' });
 });
 
-describe('IssueStatistics.all', () => {
+describe('IssuesStatistics.all', () => {
   it('should return all the global issue stats', async () => {
     const settings = await service.all();
 

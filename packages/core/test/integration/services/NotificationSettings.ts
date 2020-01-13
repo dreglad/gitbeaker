@@ -40,23 +40,23 @@ describe('NotificationSettings.all', () => {
 
 describe('NotificationSettings.edit', () => {
   it('should return edit the global notification settings', async () => {
-    const settings = await service.edit({ reassignMergeRequest: true });
+    const settings = await service.edit({ level: 'watch' });
 
     expect(settings).toBeObject();
-    expect(settings).toContainEntry(['reassign_merge_request', true]);
+    expect(settings).toContainEntry(['level', 'watch']);
   });
 
   it('should return edit the group notification settings', async () => {
-    const settings = await service.edit({ groupId: group.id, mergeMergeRequest: true });
+    const settings = await service.edit({ groupId: group.id, level: 'watch' });
 
     expect(settings).toBeObject();
-    expect(settings).toContainEntry(['merge_merge_request', true]);
+    expect(settings).toContainEntry(['level', 'watch']);
   });
 
   it('should return edit the project notification settings', async () => {
-    const settings = await service.all({ projectId: project.id, reopenMergeRequest: true });
+    const settings = await service.all({ projectId: project.id, level: 'watch' });
 
     expect(settings).toBeObject();
-    expect(settings).toContainEntry(['reopen_merge_request', true]);
+    expect(settings).toContainEntry(['level', 'watch']);
   });
 });

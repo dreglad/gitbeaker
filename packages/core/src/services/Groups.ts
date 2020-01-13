@@ -28,8 +28,8 @@ export class Groups extends BaseService {
     return RequestHelper.get(this, 'groups', options) as Promise<GroupSchema[]>;
   }
 
-  create(options?: BaseRequestOptions) {
-    return RequestHelper.post(this, 'groups', options);
+  create(name, path, options?: BaseRequestOptions) {
+    return RequestHelper.post(this, 'groups', { name, path, ...options });
   }
 
   createLDAPLink(groupId: string | number, cn, groupAccess, provider: string, options?: Sudo) {
