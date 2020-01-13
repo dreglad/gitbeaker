@@ -7,7 +7,9 @@ import {
 } from '../infrastructure';
 import { ProjectSchema } from './Projects';
 
-export interface GroupSchema {
+export type GroupSchema = GroupSchemaDefault | GroupSchemaCamelized;
+
+export interface GroupSchemaDefault {
   id: number;
   name: string;
   path: string;
@@ -19,9 +21,21 @@ export interface GroupSchema {
   web_url: string;
 }
 
-export interface GroupDetailSchema extends GroupSchema {
-  projects: ProjectSchema[];
+export interface GroupSchemaCamelized {
+  id: number;
+  name: string;
+  path: string;
+  fullName: string;
+  fullPath: string;
+  parentId: number;
+  visibility: string;
+  avatarUrl: string;
+  webUrl: string;
 }
+
+export type GroupDetailSchema = GroupSchema & {
+  projects: ProjectSchema[];
+};
 
 export class Groups extends BaseService {
   all(options?: PaginatedRequestOptions): Promise<GroupSchema[]> {

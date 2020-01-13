@@ -1,0 +1,45 @@
+import { Licence } from '../../../dist';
+
+let service;
+
+beforeAll(async () => {
+  service = new Licence({
+    host: process.env.GITLAB_URL,
+    token: process.env.PERSONAL_ACCESS_TOKEN,
+  });
+});
+
+describe('Licence.all', () => {
+  it('Should return an array of licences', async () => {
+    const settings = await service.all();
+
+    expect(settings).toBeInstanceOf(Array);
+  });
+});
+
+describe('Licence.add', () => {
+  it('Should add a licence', async () => {
+    const licence = await service.add('A cool licence');
+
+    expect(licence).toBeObject();
+  });
+});
+
+describe('Licence.show', () => {
+  it('should show a specific licence', async () => {
+    const licence = await service.add('My fake licence');
+    const licenceshow = await service.show(licence.id);
+
+    expect(licenceshow).toMatchObject(licence);
+  });
+});
+
+describe('Licence.remove', () => {
+  it('should show a specific licence', async () => {
+    const licence = await service.add('My deleted licence');
+
+    await service.remove(licence.id);
+
+    await expect(service.show(licence.id)).toThrow();
+  });
+});
