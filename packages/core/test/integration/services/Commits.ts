@@ -39,7 +39,7 @@ describe('Commits.cherryPick', () => {
     const actions = [
       {
         action: 'create',
-        filePath: 'foo/bar/boo',
+        filePath: 'foo/bar/boo.txt',
         content: 'some other content',
       },
     ];

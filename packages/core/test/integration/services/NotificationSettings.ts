@@ -57,7 +57,7 @@ describe('NotificationSettings.edit', () => {
   });
 
   it('should return edit the project notification settings', async () => {
-    const settings = await service.all({ projectId: project.id, level: 'watch' });
+    const settings = await service.edit({ projectId: project.id, level: 'watch' });
 
     expect(settings).toBeObject();
     expect(settings).toContainEntry(['level', 'watch']);
