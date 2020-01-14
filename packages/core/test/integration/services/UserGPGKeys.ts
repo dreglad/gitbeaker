@@ -1,4 +1,4 @@
-import { UserGPGKeys } from '../../../dist';
+import { UserGPGKeys } from '../../../src';
 
 let service: UserGPGKeys;
 

@@ -94,7 +94,7 @@ describe('handler', () => {
 
   it('should return correct properties if request is valid', async () => {
     got.mockImplementationOnce(() => ({
-      status: 404,
+      statusCode: 404,
       headers: {},
       body: {},
     }));

@@ -1,4 +1,4 @@
-import { Issues, Projects } from '../../../dist';
+import { Issues, Projects } from '../../../src';
 
 const config = {
   host: process.env.GITLAB_URL,

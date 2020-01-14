@@ -1,4 +1,4 @@
-import { Projects } from '../../../dist';
+import { Projects } from '../../../src';
 
 let service: Projects;
 

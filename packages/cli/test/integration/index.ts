@@ -1,12 +1,11 @@
 /* eslint no-console: 0 */
 import { exec } from 'child_process';
-import * as path from 'path';
 import { promisify } from 'util';
 import strip from 'strip-ansi';
 import pkg from '../../package.json';
+import bin from '../../src';
 
 const execP = promisify(exec);
-const bin = path.resolve(__dirname, '..', '..', 'dist');
 let env: Record<string, string | undefined> = {};
 
 function cli(cmd, options = {}) {

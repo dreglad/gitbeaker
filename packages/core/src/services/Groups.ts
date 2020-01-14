@@ -4,6 +4,7 @@ import {
   PaginatedRequestOptions,
   RequestHelper,
   Sudo,
+  ShowExpanded,
 } from '../infrastructure';
 import { ProjectSchema } from './Projects';
 
@@ -42,11 +43,17 @@ export class Groups extends BaseService {
     return RequestHelper.get(this, 'groups', options) as Promise<GroupSchema[]>;
   }
 
-  create(name, path, options?: BaseRequestOptions) {
+  create(name, path, options?: BaseRequestOptions & ShowExpanded) {
     return RequestHelper.post(this, 'groups', { name, path, ...options });
   }
 
-  createLDAPLink(groupId: string | number, cn, groupAccess, provider: string, options?: Sudo) {
+  createLDAPLink(
+    groupId: string | number,
+    cn,
+    groupAccess,
+    provider: string,
+    options?: Sudo & ShowExpanded,
+  ) {
     const gId = encodeURIComponent(groupId);
 
     return RequestHelper.post(this, `groups/${gId}/ldap_group_links`, {
@@ -57,7 +64,7 @@ export class Groups extends BaseService {
     });
   }
 
-  edit(groupId: string | number, options?: BaseRequestOptions) {
+  edit(groupId: string | number, options?: BaseRequestOptions & ShowExpanded) {
     const gId = encodeURIComponent(groupId);
 
     return RequestHelper.put(this, `groups/${gId}`, options);
@@ -69,7 +76,7 @@ export class Groups extends BaseService {
     return RequestHelper.get(this, `groups/${gId}/projects`, options) as Promise<ProjectSchema[]>;
   }
 
-  remove(groupId: string | number, options?: Sudo) {
+  remove(groupId: string | number, options?: Sudo & ShowExpanded) {
     const gId = encodeURIComponent(groupId);
 
     return RequestHelper.del(this, `groups/${gId}`, options);
@@ -78,7 +85,7 @@ export class Groups extends BaseService {
   removeLDAPLink(
     groupId: string | number,
     cn,
-    { provider, ...options }: Sudo & { provider?: string } = {},
+    { provider, ...options }: Sudo & ShowExpanded & { provider?: string } = {},
   ) {
     const gId = encodeURIComponent(groupId);
     const url = provider ? `${provider}/${cn}` : `${cn}`;
@@ -105,7 +112,7 @@ export class Groups extends BaseService {
     return RequestHelper.get(this, `groups/${gId}/subgroups`, options);
   }
 
-  syncLDAP(groupId: string | number, options?: Sudo) {
+  syncLDAP(groupId: string | number, options?: Sudo & ShowExpanded) {
     const gId = encodeURIComponent(groupId);
 
     return RequestHelper.post(this, `groups/${gId}/ldap_sync`, options);

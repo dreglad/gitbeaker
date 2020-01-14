@@ -48,10 +48,10 @@ export async function handler(endpoint, options) {
     throw e;
   }
 
-  const { status, headers } = response;
+  const { statusCode, headers } = response;
   const body = processBody(response);
 
-  return { body, headers, status };
+  return { body, headers, status: statusCode };
 }
 
 export const Requester = createInstance(defaultRequest, handler);
