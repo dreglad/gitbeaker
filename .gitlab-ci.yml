@@ -76,7 +76,7 @@ test:core:integration: &integration
     - echo $PERSONAL_ACCESS_TOKEN
     - echo $GITLAB_URL
     - echo $CODECOV_TOKEN
-  script: yarn jest core/test/integration/services/Groups.ts --runInBand && yarn codecov -F core
+  script: yarn jest core/test/integration --runInBand && yarn codecov -F core
 
 # test:cli:integration:
 #   <<: *integration
