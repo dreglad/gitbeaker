@@ -1,4 +1,4 @@
-import { Labels, Projects } from '../../../dist';
+import { Labels, Projects } from '../../../src';
 
 const config = {
   host: process.env.GITLAB_URL,

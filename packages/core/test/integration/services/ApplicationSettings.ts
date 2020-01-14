@@ -1,4 +1,4 @@
-import { ApplicationSettings } from '../../../dist';
+import { ApplicationSettings } from '../../../src';
 
 let service;
 
@@ -16,7 +16,7 @@ describe('ApplicationSettings.all', () => {
     settings = await service.all();
   });
 
-  it('Should return an object', async () => {
+  it('should return an object', async () => {
     expect(settings).toBeObject();
   });
 

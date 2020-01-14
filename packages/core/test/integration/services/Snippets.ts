@@ -1,4 +1,4 @@
-import { Snippets } from '../../../dist';
+import { Snippets } from '../../../src';
 
 let service: Snippets;
 

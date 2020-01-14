@@ -1,4 +1,4 @@
-import { Groups } from '../../../dist';
+import { Groups } from '../../../src';
 
 let service: Groups;
 
@@ -70,8 +70,21 @@ describe('Groups.remove', () => {
       'group-remove-integration-test',
     );
 
-    await service.remove(g.id);
+    const response = await service.remove(g.id, { showExpanded: true });
 
-    await expect(service.show(g.id)).rejects.toThrow();
+    expect(response.status).toBe(202);
+  });
+});
+
+describe('Groups.search', () => {
+  it('should search a group', async () => {
+    const g = await service.create(
+      'Group Search Integration Test',
+      'group-search-integration-test',
+    );
+
+    const gs = await service.search('group-search-integration-test');
+
+    await expect(gs[0].id).toBe(g.id);
   });
 });

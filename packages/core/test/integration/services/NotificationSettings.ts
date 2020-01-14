@@ -1,4 +1,4 @@
-import { NotificationSettings, Projects, Groups } from '../../../dist';
+import { NotificationSettings, Projects, Groups } from '../../../src';
 
 const config = {
   host: process.env.GITLAB_URL,

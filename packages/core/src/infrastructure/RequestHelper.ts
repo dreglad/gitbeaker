@@ -6,6 +6,10 @@ export interface Sudo {
   sudo?: string | number;
 }
 
+export interface ShowExpanded {
+  showExpanded?: boolean;
+}
+
 export interface PaginationOptions {
   total: number;
   next: number | null;
@@ -20,31 +24,39 @@ export interface BaseRequestOptions extends Sudo {
   [key: string]: any;
 }
 
-export interface PaginatedRequestOptions extends BaseRequestOptions {
-  showPagination?: boolean;
+export interface PaginatedRequestOptions extends BaseRequestOptions, ShowExpanded {
   maxPages?: number;
   page?: number;
   perPage?: number;
 }
 
-export type PaginationResponse = { data: object[]; pagination: PaginationOptions };
-export type GetResponse = PaginationResponse | object | object[];
-export type PostResponse = object;
-export type PutResponse = object;
-export type DelResponse = object;
+export interface ExpandedResponse {
+  data: object;
+  headers: object;
+  status: number;
+}
+export interface PaginationResponse {
+  data: object[];
+  pagination: PaginationOptions;
+}
+
+export type GetResponse = PaginationResponse | ExpandedResponse | object | object[];
+export type PostResponse = ExpandedResponse | object;
+export type PutResponse = ExpandedResponse | object;
+export type DelResponse = ExpandedResponse | object;
 
 async function get(
   service: BaseService,
   endpoint: string,
   options: PaginatedRequestOptions = {},
 ): Promise<GetResponse> {
-  const { showPagination, maxPages, sudo, ...query } = options;
+  const { showExpanded, maxPages, sudo, ...query } = options;
   const response = await service.requester.get(service, endpoint, {
     query: query || {},
     sudo,
   });
 
-  const { headers } = response;
+  const { headers, status } = response;
   let { body } = response;
   let pagination = {
     total: parseInt(headers['x-total'], 10),
@@ -68,14 +80,27 @@ async function get(
     const more = (await get(service, next.replace(regex, ''), {
       maxPages,
       sudo,
-      showPagination: true,
+      showExpanded: true,
     })) as PaginationResponse;
 
     pagination = more.pagination;
     body = [...body, ...more.data];
   }
 
-  return (query.page || body.length > 0) && showPagination ? { data: body, pagination } : body;
+  // If expanded version is not requested, return body
+  if (!showExpanded) return body;
+
+  // Else build the expanded response
+  const output = { data: body } as Record<string, any>;
+
+  if (body.length > 0 || query.page) {
+    output.pagination = pagination;
+  } else {
+    output.headers = headers;
+    output.status = status;
+  }
+
+  return output;
 }
 
 function stream(service: BaseService, endpoint: string, options: BaseRequestOptions = {}) {
@@ -93,14 +118,14 @@ async function post(
   endpoint: string,
   options: BaseRequestOptions = {},
 ): Promise<PostResponse> {
-  const { sudo, form, ...body } = options;
+  const { sudo, form, showExpanded, ...body } = options;
 
-  const response = await service.requester.post(service, endpoint, {
+  const r = await service.requester.post(service, endpoint, {
     body: form || body,
     sudo,
   });
 
-  return response.body;
+  return showExpanded ? { data: r.body, status: r.status, headers: r.headers } : r.body;
 }
 
 async function put(
@@ -108,13 +133,13 @@ async function put(
   endpoint: string,
   options: BaseRequestOptions = {},
 ): Promise<PutResponse> {
-  const { sudo, ...body } = options;
-  const response = await service.requester.put(service, endpoint, {
+  const { sudo, showExpanded, ...body } = options;
+  const r = await service.requester.put(service, endpoint, {
     body,
     sudo,
   });
 
-  return response.body;
+  return showExpanded ? { data: r.body, status: r.status, headers: r.headers } : r.body;
 }
 
 async function del(
@@ -122,13 +147,13 @@ async function del(
   endpoint: string,
   options: BaseRequestOptions = {},
 ): Promise<DelResponse> {
-  const { sudo, ...query } = options;
-  const response = await service.requester.delete(service, endpoint, {
+  const { sudo, showExpanded, ...query } = options;
+  const r = await service.requester.delete(service, endpoint, {
     query,
     sudo,
   });
 
-  return response.body;
+  return showExpanded ? { data: r.body, status: r.status, headers: r.headers } : r.body;
 }
 
 export const RequestHelper = {

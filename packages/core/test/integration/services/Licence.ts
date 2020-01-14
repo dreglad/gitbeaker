@@ -1,4 +1,4 @@
-import { Licence } from '../../../dist';
+import { Licence } from '../../../src';
 
 let service;
 
@@ -10,7 +10,7 @@ beforeAll(async () => {
 });
 
 describe('Licence.all', () => {
-  it('Should return an array of licences', async () => {
+  it('should return an array of licences', async () => {
     const settings = await service.all();
 
     expect(settings).toBeInstanceOf(Array);
@@ -18,7 +18,7 @@ describe('Licence.all', () => {
 });
 
 describe('Licence.add', () => {
-  it('Should add a licence', async () => {
+  it('should add a licence', async () => {
     const licence = await service.add('A cool licence');
 
     expect(licence).toBeObject();

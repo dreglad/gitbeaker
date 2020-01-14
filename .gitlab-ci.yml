@@ -37,7 +37,7 @@ lint:docs:
 build:
   stage: build
   script:
-    - yarn run build
+    - yarn build
   artifacts:
     paths:
       - packages/core/dist/
@@ -46,9 +46,9 @@ build:
 # Test packages and builds
 test:core:unit:
   stage: test
-  script: yarn jest core/test/unit && yarn codecov
+  script: yarn jest core/test/unit && yarn codecov -F core
 
-test:core-cjs:integration: &integration
+test:core:integration: &integration
   image:
     name: docker/compose:latest
     entrypoint: ['/bin/sh', '-c']
@@ -76,17 +76,25 @@ test:core-cjs:integration: &integration
     - echo $PERSONAL_ACCESS_TOKEN
     - echo $GITLAB_URL
     - echo $CODECOV_TOKEN
-  script: yarn jest core/test/integration --runInBand && yarn codecov
+  script: yarn jest core/test/integration/services/Groups.ts --runInBand && yarn codecov -F core
 
-test:cli:integration:
-  <<: *integration
-  script: yarn jest core/test/integration --runInBand && yarn codecov
+# test:cli:integration:
+#   <<: *integration
+#   script: yarn jest core/test/integration --runInBand && yarn codecov
 
-# test:core-es:integration:
+# test:cli:integration:dist:
+#   <<: *integration
+#   script: yarn jest core/test/integration --runInBand && yarn codecov
+
+# test:core:integration:dist-cjs:
 #   <<: *integration
 #   script: yarn jest core/test/integration --runInBand --moduleNameMapper="{dist:dist/index.es.js}"
 
-# test:core-browser:integration:
+# test:core:integration:dist-es
+#   <<: *integration
+#   script: yarn jest core/test/integration --runInBand --moduleNameMapper="{dist:dist/index.es.js}"
+
+# test:core:integration:browser:
 #   <<: *integration
 #   script: npm run test:integration -- --scope=core --moduleNameMapper="{dist:dist/index.umd.js}" && codecov
 
