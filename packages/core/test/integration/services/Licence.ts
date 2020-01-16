@@ -9,7 +9,7 @@ beforeAll(async () => {
   });
 });
 
-describe('Licence.all', () => {
+describe.skip('Licence.all', () => {
   it('should return an array of licences', async () => {
     const settings = await service.all();
 
@@ -17,7 +17,7 @@ describe('Licence.all', () => {
   });
 });
 
-describe('Licence.add', () => {
+describe.skip('Licence.add', () => {
   it('should add a licence', async () => {
     const licence = await service.add('A cool licence');
 
@@ -25,7 +25,7 @@ describe('Licence.add', () => {
   });
 });
 
-describe('Licence.show', () => {
+describe.skip('Licence.show', () => {
   it('should show a specific licence', async () => {
     const licence = await service.add('My fake licence');
     const licenceshow = await service.show(licence.id);
@@ -34,7 +34,7 @@ describe('Licence.show', () => {
   });
 });
 
-describe('Licence.remove', () => {
+describe.skip('Licence.remove', () => {
   it('should show a specific licence', async () => {
     const licence = await service.add('My deleted licence');
 

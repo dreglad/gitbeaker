@@ -5,7 +5,7 @@ import {
   RequestHelper,
 } from '../infrastructure';
 
-const url = userId => (userId ? `users/${encodeURIComponent(userId)}/gpg_keys` : 'users/gpg_keys');
+const url = userId => (userId ? `users/${encodeURIComponent(userId)}/gpg_keys` : 'user/gpg_keys');
 
 export class UserGPGKeys extends BaseService {
   all({ userId, ...options }: { userId?: number } & PaginatedRequestOptions = {}) {

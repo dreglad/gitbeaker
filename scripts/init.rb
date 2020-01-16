@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 u = User.first
+u.name = 'admin'
 u.admin = true
 u.save!
 

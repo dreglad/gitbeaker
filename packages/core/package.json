@@ -25,6 +25,7 @@
     "esm": "^3.2.25",
     "fs-extra": "^8.1.0",
     "get-param-names": "github:jdalrymple/get-param-names#1-improve-functionality",
+    "openpgp": "^4.8.0",
     "rollup": "^1.29.0",
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-globals": "^1.4.0",

@@ -1,21 +1,21 @@
 import { NotificationSettings, Projects, Groups } from '../../../src';
 
-const config = {
-  host: process.env.GITLAB_URL,
-  token: process.env.PERSONAL_ACCESS_TOKEN,
-};
 let service;
 let group;
 let project;
 
 beforeAll(async () => {
+  const config = {
+    host: process.env.GITLAB_URL,
+    token: process.env.PERSONAL_ACCESS_TOKEN,
+  };
   const projectService = new Projects(config);
   const groupService = new Groups(config);
 
   service = new NotificationSettings(config);
 
   group = await groupService.create(
-    'Notification Settings Integration',
+    'Notification Settings Integration Test',
     'notification-settings-integration-test',
   );
   project = await projectService.create({ name: 'Notification Settings Integration Test' });

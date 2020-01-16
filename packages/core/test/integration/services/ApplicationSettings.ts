@@ -27,3 +27,12 @@ describe('ApplicationSettings.all', () => {
     expect(settings).toContainKeys(['id', 'gravatar_enabled']);
   });
 });
+
+describe('ApplicationSettings.edit', () => {
+  it('should update Application Settings', async () => {
+    const settings = await service.edit({ terms: 'Testing terms' });
+
+    expect(settings).toBeObject();
+    expect(settings.terms).toBe('Testing terms');
+  });
+});

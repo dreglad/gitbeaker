@@ -1,13 +1,13 @@
 import { Issues, Projects } from '../../../src';
 
-const config = {
-  host: process.env.GITLAB_URL,
-  token: process.env.PERSONAL_ACCESS_TOKEN,
-};
 let project;
 let service: Issues;
 
 beforeAll(async () => {
+  const config = {
+    host: process.env.GITLAB_URL,
+    token: process.env.PERSONAL_ACCESS_TOKEN,
+  };
   // Crease project service
   const projectService = new Projects(config);
 
@@ -20,49 +20,51 @@ beforeAll(async () => {
 
 describe('Issues.create', () => {
   it('should create a valid issue on a project', async () => {
-    const issue1 = await service.create(project.id, {
-      title: 'Issue Integration test1',
+    const issue = await service.create(project.id, {
+      title: 'Issue.create Integration Test',
       description: 'A test issue ensuring a sucessfully create Issue in GitLab',
     });
 
-    const issue2 = await service.create(project.id, {
-      title: 'Issue Integration test2',
-      description: 'A test issue ensuring a sucessfully create Issue in GitLab',
-    });
-
-    expect(issue1).toBeInstanceOf(Object);
-    expect(issue1.title).toBe('Issue Integration test1');
-    expect(issue2).toBeInstanceOf(Object);
-    expect(issue2.title).toBe('Issue Integration test2');
+    expect(issue).toBeInstanceOf(Object);
+    expect(issue.title).toBe('Issue.create Integration Test');
   });
 });
 
 describe('Issues.all', () => {
+  beforeAll(() => {
+    const issues: object[] = [];
+
+    for (let i = 0; i < 2; i += 1) {
+      issues.push(
+        service.create(project.id, {
+          title: `Issue all Integration Test ${i}`,
+          description: 'Testing issues.all',
+        }),
+      );
+    }
+
+    return Promise.all(issues);
+  });
+
   it('should return a list of issues on a project', async () => {
     const issues = await service.all({ projectId: project.id });
+    const filtered = issues.filter(i => i.description === 'Testing issues.all');
 
-    expect(issues).toBeInstanceOf(Array);
-    expect(issues.length).toEqual(2);
+    expect(filtered).toBeInstanceOf(Array);
+    expect(filtered).toHaveLength(2);
   });
 
   it('should return a list of all issues', async () => {
     const issues = await service.all();
 
     expect(issues).toBeInstanceOf(Array);
-    expect(issues).toHaveLength(2);
   });
 
   it('should return a list filtered to a specfic page', async () => {
-    const issues1 = await service.all({ projectId: project.id, perPage: 1, page: 1 });
+    const issues = await service.all({ projectId: project.id, perPage: 1, page: 1 });
+    const filtered = issues.filter(i => i.description === 'Testing issues.all');
 
-    expect(issues1).toBeInstanceOf(Array);
-    expect(issues1).toHaveLength(1);
-    expect(issues1[0].title).toBe('Issue Integration test2');
-
-    const issues2 = await service.all({ projectId: project.id, perPage: 1, page: 2 });
-
-    expect(issues2).toBeInstanceOf(Array);
-    expect(issues2).toHaveLength(1);
-    expect(issues2[0].title).toBe('Issue Integration test1');
+    expect(filtered).toBeInstanceOf(Array);
+    expect(filtered).toHaveLength(1);
   });
 });

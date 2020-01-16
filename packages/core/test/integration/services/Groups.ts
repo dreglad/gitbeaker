@@ -12,11 +12,11 @@ beforeEach(() => {
 describe('Groups.create', () => {
   it('should create a valid group', async () => {
     const g = await service.create(
-      'Group Creation Integration test',
+      'Group Creation Integration Test',
       'group-creation-integration-test',
     );
     expect(g).toBeInstanceOf(Object);
-    expect(g.name).toEqual('Group Creation Integration test');
+    expect(g.name).toEqual('Group Creation Integration Test');
   });
 });
 
@@ -29,10 +29,7 @@ describe('Groups.all', () => {
 
 describe('Groups.edit', () => {
   it('should edit a group', async () => {
-    const g = await service.create(
-      'Group Edit Integration Test Original',
-      'group-edit-integration-test',
-    );
+    const g = await service.create('Group Edit Integration Test', 'group-edit-integration-test');
     const ge = await service.edit(g.id, { name: 'Group Edit Integration Test Updated' });
 
     expect(g).toBeInstanceOf(Object);

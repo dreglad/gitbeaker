@@ -1,13 +1,14 @@
 import { Labels, Projects } from '../../../src';
 
-const config = {
-  host: process.env.GITLAB_URL,
-  token: process.env.PERSONAL_ACCESS_TOKEN,
-};
 let project;
 let service: Labels;
 
 beforeAll(async () => {
+  const config = {
+    host: process.env.GITLAB_URL,
+    token: process.env.PERSONAL_ACCESS_TOKEN,
+  };
+
   // Crease project service
   const projectService = new Projects(config);
 
@@ -15,7 +16,7 @@ beforeAll(async () => {
   service = new Labels(config);
 
   // Create a template project
-  project = await projectService.create({ name: 'Labels Integration test' });
+  project = await projectService.create({ name: 'Labels Integration Test' });
 });
 
 describe('Labels.create', () => {
@@ -30,14 +31,14 @@ describe('Labels.create', () => {
 describe('Labels.remove', () => {
   it('should remove/delete a valid label on a project', async () => {
     const label = await service.create(project.id, 'Test Label3', '#FFAABB');
-    const value = await service.remove(project.id, label.name);
+    const { status } = await service.remove(project.id, label.name, { showExpanded: true });
 
-    expect(value).toEqual('');
+    expect(status).toBe(204);
   });
 });
 
 describe('Labels.all', () => {
-  beforeAll(async () => {
+  beforeAll(() => {
     const labels: object[] = [];
 
     for (let i = 0; i < 50; i += 1) {
@@ -66,7 +67,7 @@ describe('Labels.all', () => {
     const { data, pagination } = await service.all(project.id, {
       perPage: 5,
       page: 5,
-      showPagination: true,
+      showExpanded: true,
     });
 
     expect(data).toBeInstanceOf(Array);

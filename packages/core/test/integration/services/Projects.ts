@@ -11,7 +11,8 @@ beforeEach(() => {
 
 describe('Projects.create', () => {
   it('should create a valid project', async () => {
-    const p = await service.create({ name: 'Project Creation Integration test' });
+    const p = await service.create({ name: 'Project Creation Integration Test' });
+
     expect(p).toBeInstanceOf(Object);
     expect(p.name).toEqual('Project Creation Integration test');
   });
@@ -21,7 +22,7 @@ describe('Projects.upload', () => {
   let project: object;
 
   beforeAll(async () => {
-    project = await service.create({ name: 'Project Upload Integration test' });
+    project = await service.create({ name: 'Project Upload Integration Test' });
   });
 
   it('should upload a text file', async () => {

@@ -1,3 +1,4 @@
+import { generateKey } from 'openpgp';
 import { UserGPGKeys } from '../../../src';
 
 let service: UserGPGKeys;
@@ -11,10 +12,16 @@ beforeEach(() => {
 
 describe('UserGPGKeys.add', () => {
   it('should add a new gpg key to the user', async () => {
-    const keys = await service.add('key');
+    const { publicKeyArmored } = await generateKey({
+      userIds: {
+        name: 'Adding User',
+        email: 'test@test.com',
+      },
+    });
+    const keys = await service.add(publicKeyArmored);
 
-    expect(keys).toBeInstanceOf(Array);
-    expect(keys[0]).toHaveProperty(['id', 'key', 'created_at']);
+    expect(keys).toBeObject();
+    expect(keys).toContainKeys(['id', 'key', 'created_at']);
   });
 });
 
@@ -28,9 +35,13 @@ describe('UserGPGKeys.all', () => {
 
 describe('UserGPGKeys.show', () => {
   it('should get one user gcp key', async () => {
-    const keys = await service.add('key2');
-    const key = keys.find(k => k.key === 'key2');
-
+    const { publicKeyArmored } = await generateKey({
+      userIds: {
+        name: 'Show User',
+        email: 'test@test.com',
+      },
+    });
+    const key = await service.add(publicKeyArmored);
     const keyshow = await service.show(key.id);
 
     expect(keyshow).toMatchObject(key);
@@ -39,11 +50,16 @@ describe('UserGPGKeys.show', () => {
 
 describe('UserGPGKeys.remove', () => {
   it('should get one user gcp key', async () => {
-    const keys = await service.add('key3');
-    const key = keys.find(k => k.key === 'key3');
+    const { publicKeyArmored } = await generateKey({
+      userIds: {
+        name: 'Remove User',
+        email: 'test@test.com',
+      },
+    });
+    const key = await service.add(publicKeyArmored);
 
-    await service.remove(key.id);
+    const { status } = await service.remove(key.id, { showExpanded: true });
 
-    await expect(service.show(key.id)).rejects.toThrow();
+    await expect(status).toBe(204);
   });
 });

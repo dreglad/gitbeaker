@@ -18,7 +18,7 @@ beforeAll(async () => {
     'IssuesStatistics Integration Test',
     'issues-statistics-integration-test',
   );
-  project = await projectService.create({ name: 'IssuesStatistics Integration' });
+  project = await projectService.create({ name: 'IssuesStatistics Integration Test' });
 });
 
 describe('IssuesStatistics.all', () => {
